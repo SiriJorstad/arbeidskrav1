@@ -84,16 +84,16 @@
         {
           id: 1,
           name: "Ariana archer",
-          maxHP: 500,
-          currentHP: 500,
+          maxHP: 600,
+          currentHP: 600,
           damage: 400,
           alive: true,
         },
         {
           id: 2,
           name: "Wyona Warrior",
-          maxHP: 600,
-          currentHP: 600,
+          maxHP: 800,
+          currentHP: 800,
           damage: 400,
           alive: true,
         },
@@ -150,6 +150,32 @@
 
         let dragonHealthBar = document.getElementsByClassName("dragon-health");
         dragonHealthBar[0].style.width = `${0.15 * dragonObject.currentHP}px`;
+        dragonAttack();
+      }
+
+      //Random attack from dragon
+      function dragonAttack() {
+        let randomDragonAttackGenerator = Math.floor(
+          Math.random() * heroesArray.length
+        );
+        let heroAttacked = heroesArray[randomDragonAttackGenerator];
+        heroAttacked.currentHP -= 200;
+
+        if (heroAttacked.name.includes("Healer")) {
+          const healerText =
+            document.getElementById("healer-health-txt");
+          healerText.innerHTML = `${heroAttacked.currentHP} / 400 HP `;
+        } else if (heroAttacked.name.includes("archer")) {
+          const archerText =
+            document.getElementById("archer-health-txt");
+          archerText.innerHTML = `${heroAttacked.currentHP} / 600 HP `;
+        } else if (heroAttacked.name.includes("Warrior")) {
+          const warriorText =
+            document.getElementById("warrior-health-txt");
+          warriorText.innerHTML = `${heroAttacked.currentHP} / 800 HP `;
+        }
+
+        alert(`${dragonObject.name} har angrepet ${heroAttacked.name} `);
       }
     </script>
   </body>
