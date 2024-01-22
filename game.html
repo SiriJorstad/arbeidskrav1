@@ -108,14 +108,18 @@
       };
       //JEG PRØVER MEG PÅ OPPGAVE 1// forEach, Find
 
-      const heroPictures = document.getElementsByClassName("hero");
+      //Selecting the pictures of the heroes, adding a function when onclick
+      const healerPicture = document.querySelector(".healer .hero");
+      const archerPicture = document.querySelector(".archer .hero");
+      const warriorPicture = document.querySelector(".warrior .hero");
 
-      heroPictures[0].addEventListener("click", healerClick);
-      heroPictures[1].addEventListener("click", archerClick);
-      heroPictures[2].addEventListener("click", warriorClick);
+      healerPicture.addEventListener("click", healerClick);
+      archerPicture.addEventListener("click", archerClick);
+      warriorPicture.addEventListener("click", warriorClick);
 
       //Functions when you click on the heroes
 
+      // When Healer is clicked, alert name of hero, damage and dragon name. Update dragons HP
       function healerClick() {
         alert(
           `${heroesArray[0].name} har gjort ${heroesArray[0].damage} skade på ${dragonObject.name} `
@@ -123,7 +127,7 @@
         dragonObject.currentHP -= heroesArray[0].damage;
         updateDragonHP();
       }
-
+      // When Archer is clicked, alert name of hero, damage and dragon name. Update dragons HP
       function archerClick() {
         alert(
           `${heroesArray[1].name} har gjort ${heroesArray[1].damage} skade på ${dragonObject.name} `
@@ -131,7 +135,7 @@
         dragonObject.currentHP -= heroesArray[1].damage;
         updateDragonHP();
       }
-
+      // When Warrior is clicked, alert name of hero, damage and dragon name. Update dragons HP
       function warriorClick() {
         alert(
           `${heroesArray[2].name} har gjort ${heroesArray[2].damage} skade på ${dragonObject.name} `
@@ -141,7 +145,7 @@
       }
 
       //Functions that updates the dragons HP
-
+      // Updating Dragons HP. Select and change text. Change healthbar to current HP level. Call on dragonAttack function
       function updateDragonHP() {
         const dragonText = document.getElementsByClassName(
           "text-container dragon-health-txt"
@@ -155,41 +159,51 @@
 
       //Random attack from dragon
       function dragonAttack() {
-        let randomDragonAttackGenerator = Math.floor(
-          Math.random() * heroesArray.length
+        //Random hero generator with alive heroes
+        let aliveHeroes = heroesArray.filter((hero) => hero.alive);
+
+        let randomAliveHeroIndex = Math.floor(
+          Math.random() * aliveHeroes.length
         );
+        let heroAttacked = aliveHeroes[randomAliveHeroIndex];
 
-        let heroAttacked = heroesArray[randomDragonAttackGenerator];
+        //Reducing 200 from attacked hero HP
+        heroAttacked.currentHP -= 200;
 
-        if (heroAttacked.alive == true) {
-          heroAttacked.currentHP -= 200;
-
-          if (heroAttacked.name.includes("Healer")) {
-            const healerText = document.getElementById("healer-health-txt");
-            healerText.innerHTML = `${heroAttacked.currentHP} / 400 HP `;
-            if (heroAttacked.currentHP <= 0) {
-              heroAttacked.alive = false;
-              heroPictures[0].style.display = "none";
-            }
-          } else if (heroAttacked.name.includes("archer")) {
-            const archerText = document.getElementById("archer-health-txt");
-            archerText.innerHTML = `${heroAttacked.currentHP} / 600 HP `;
-            if (heroAttacked.currentHP <= 0) {
-              heroAttacked.alive = false;
-              heroPictures[1].style.display = "none";
-            }
-          } else if (heroAttacked.name.includes("Warrior")) {
-            const warriorText = document.getElementById("warrior-health-txt");
-            warriorText.innerHTML = `${heroAttacked.currentHP} / 800 HP `;
-            if (heroAttacked.currentHP <= 0) {
-              heroAttacked.alive = false;
-              heroPictures[2].style.display = "none";
-            }
+        //If Healer is attacked, change text with updated HP. If HP is 0 or less, remove picture and change alive to false
+        if (heroAttacked.name.includes("Healer")) {
+          const healerText = document.getElementById("healer-health-txt");
+          healerText.innerHTML = `${heroAttacked.currentHP} / 400 HP `;
+          if (heroAttacked.currentHP <= 0) {
+            heroAttacked.alive = false;
+            healerPicture.remove();
           }
-          alert(`${dragonObject.name} har angrepet ${heroAttacked.name} `);
-         
+
+          //If Archer is attacked, change text with updated HP. If HP is 0 or less, remove picture and change alive to false
+        } else if (heroAttacked.name.includes("archer")) {
+          const archerText = document.getElementById("archer-health-txt");
+          archerText.innerHTML = `${heroAttacked.currentHP} / 600 HP `;
+          if (heroAttacked.currentHP <= 0) {
+            heroAttacked.alive = false;
+            archerPicture.remove();
+          }
+
+          //If Warrior is attacked, change text with updated HP. If HP is 0 or less, remove picture and change alive to false
+        } else if (heroAttacked.name.includes("Warrior")) {
+          const warriorText = document.getElementById("warrior-health-txt");
+          warriorText.innerHTML = `${heroAttacked.currentHP} / 800 HP `;
+          if (heroAttacked.currentHP <= 0) {
+            heroAttacked.alive = false;
+            warriorPicture.remove();
+          }
         }
+        //Alert that announces which hero is attacked by the Dragon
+        alert(`${dragonObject.name} har angrepet ${heroAttacked.name} `);
       }
+
+
+
+      //TO DO: Fix alert when dragon has won. Remove dragon and send alert when heroes has won.
     </script>
   </body>
 </html>
