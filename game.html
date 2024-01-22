@@ -158,24 +158,37 @@
         let randomDragonAttackGenerator = Math.floor(
           Math.random() * heroesArray.length
         );
+
         let heroAttacked = heroesArray[randomDragonAttackGenerator];
-        heroAttacked.currentHP -= 200;
 
-        if (heroAttacked.name.includes("Healer")) {
-          const healerText =
-            document.getElementById("healer-health-txt");
-          healerText.innerHTML = `${heroAttacked.currentHP} / 400 HP `;
-        } else if (heroAttacked.name.includes("archer")) {
-          const archerText =
-            document.getElementById("archer-health-txt");
-          archerText.innerHTML = `${heroAttacked.currentHP} / 600 HP `;
-        } else if (heroAttacked.name.includes("Warrior")) {
-          const warriorText =
-            document.getElementById("warrior-health-txt");
-          warriorText.innerHTML = `${heroAttacked.currentHP} / 800 HP `;
+        if (heroAttacked.alive == true) {
+          heroAttacked.currentHP -= 200;
+
+          if (heroAttacked.name.includes("Healer")) {
+            const healerText = document.getElementById("healer-health-txt");
+            healerText.innerHTML = `${heroAttacked.currentHP} / 400 HP `;
+            if (heroAttacked.currentHP <= 0) {
+              heroAttacked.alive = false;
+              heroPictures[0].style.display = "none";
+            }
+          } else if (heroAttacked.name.includes("archer")) {
+            const archerText = document.getElementById("archer-health-txt");
+            archerText.innerHTML = `${heroAttacked.currentHP} / 600 HP `;
+            if (heroAttacked.currentHP <= 0) {
+              heroAttacked.alive = false;
+              heroPictures[1].style.display = "none";
+            }
+          } else if (heroAttacked.name.includes("Warrior")) {
+            const warriorText = document.getElementById("warrior-health-txt");
+            warriorText.innerHTML = `${heroAttacked.currentHP} / 800 HP `;
+            if (heroAttacked.currentHP <= 0) {
+              heroAttacked.alive = false;
+              heroPictures[2].style.display = "none";
+            }
+          }
+          alert(`${dragonObject.name} har angrepet ${heroAttacked.name} `);
+         
         }
-
-        alert(`${dragonObject.name} har angrepet ${heroAttacked.name} `);
       }
     </script>
   </body>
