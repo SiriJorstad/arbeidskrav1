@@ -107,7 +107,7 @@
         alive: true,
       };
 
-      //Selecting the pictures of the heroes, adding a function when onclick
+      //Getting images, name-text and HP text from HTML
       const healerPicture = document.getElementsByClassName("healer");
       const archerPicture = document.getElementsByClassName("archer");
       const warriorPicture = document.getElementsByClassName("warrior");
@@ -168,7 +168,7 @@
       function updateDragonHP() {
         dragonText[0].innerHTML = `${dragonObject.currentHP} / ${dragonObject.maxHP} `;
 
-        let dragonHealthBar = document.getElementsByClassName("dragon-health");
+        const dragonHealthBar = document.getElementsByClassName("dragon-health");
         dragonHealthBar[0].style.width = `${0.15 * dragonObject.currentHP}px`;
 
         if (dragonObject.currentHP <= 0) {
