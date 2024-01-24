@@ -112,6 +112,7 @@
       const healerPicture = document.querySelector(".healer .hero");
       const archerPicture = document.querySelector(".archer .hero");
       const warriorPicture = document.querySelector(".warrior .hero");
+      const dragonPicture = document.getElementsByClassName("dragon");
 
       healerPicture.addEventListener("click", healerClick);
       archerPicture.addEventListener("click", archerClick);
@@ -154,7 +155,13 @@
 
         let dragonHealthBar = document.getElementsByClassName("dragon-health");
         dragonHealthBar[0].style.width = `${0.15 * dragonObject.currentHP}px`;
-        dragonAttack();
+
+        if (dragonObject.currentHP <= 0) {
+          dragonPicture[0].remove();
+          alert("Gratulerer, du har vunnet spillet!");
+        } else {
+          dragonAttack();
+        }
       }
 
       //Random attack from dragon
@@ -200,8 +207,6 @@
         //Alert that announces which hero is attacked by the Dragon
         alert(`${dragonObject.name} har angrepet ${heroAttacked.name} `);
       }
-
-
 
       //TO DO: Fix alert when dragon has won. Remove dragon and send alert when heroes has won.
     </script>
