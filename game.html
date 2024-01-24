@@ -84,16 +84,16 @@
         {
           id: 1,
           name: "Ariana archer",
-          maxHP: 600,
-          currentHP: 600,
+          maxHP: 500,
+          currentHP: 500,
           damage: 400,
           alive: true,
         },
         {
           id: 2,
           name: "Wyona Warrior",
-          maxHP: 800,
-          currentHP: 800,
+          maxHP: 600,
+          currentHP: 600,
           damage: 400,
           alive: true,
         },
@@ -106,19 +106,37 @@
         damage: 200,
         alive: true,
       };
-      //JEG PRØVER MEG PÅ OPPGAVE 1// forEach, Find
 
       //Selecting the pictures of the heroes, adding a function when onclick
       const healerPicture = document.querySelector(".healer .hero");
       const archerPicture = document.querySelector(".archer .hero");
       const warriorPicture = document.querySelector(".warrior .hero");
       const dragonPicture = document.getElementsByClassName("dragon");
+      const healerNameTxt = document.getElementById("healer-name-txt");
+      const archerNameTxt = document.getElementById("archer-name-txt");
+      const warriorNameTxt = document.getElementById("warrior-name-txt");
+      const dragonNameTxt = document.getElementById("dragon-name-txt");
+      const dragonText = document.getElementsByClassName("dragon-health-txt");
+      const healerText = document.getElementById("healer-health-txt");
+      const archerText = document.getElementById("archer-health-txt");
+      const warriorText = document.getElementById("warrior-health-txt");
 
+      //Changing to correct name
+      healerNameTxt.innerHTML = heroesArray[0].name;
+      archerNameTxt.innerHTML = heroesArray[1].name;
+      warriorNameTxt.innerHTML = heroesArray[2].name;
+      dragonNameTxt.innerHTML = dragonObject.name;
+
+      //Changing to correct HP and max HP
+      healerText.innerHTML = `${heroesArray[0].currentHP} / ${heroesArray[0].maxHP} `;
+      archerText.innerHTML = `${heroesArray[1].currentHP} / ${heroesArray[1].maxHP} `;
+      warriorText.innerHTML = `${heroesArray[2].currentHP} / ${heroesArray[2].maxHP} `;
+      dragonText.innerHTML = `${dragonObject.currentHP} / ${dragonObject.maxHP} `;
+
+      //Functions when you click on the heroes
       healerPicture.addEventListener("click", healerClick);
       archerPicture.addEventListener("click", archerClick);
       warriorPicture.addEventListener("click", warriorClick);
-
-      //Functions when you click on the heroes
 
       // When Healer is clicked, alert name of hero, damage and dragon name. Update dragons HP
       function healerClick() {
@@ -148,17 +166,14 @@
       //Functions that updates the dragons HP
       // Updating Dragons HP. Select and change text. Change healthbar to current HP level. Call on dragonAttack function
       function updateDragonHP() {
-        const dragonText = document.getElementsByClassName(
-          "text-container dragon-health-txt"
-        );
-        dragonText[0].innerHTML = `${dragonObject.currentHP} / 2000 HP `;
+        dragonText[0].innerHTML = `${dragonObject.currentHP} / ${dragonObject.maxHP} `;
 
         let dragonHealthBar = document.getElementsByClassName("dragon-health");
         dragonHealthBar[0].style.width = `${0.15 * dragonObject.currentHP}px`;
 
         if (dragonObject.currentHP <= 0) {
           dragonPicture[0].remove();
-          alert("Gratulerer, du har vunnet spillet!");
+          alert("Gratulerer, du har vunnet spillet!🥳");
         } else {
           dragonAttack();
         }
@@ -179,8 +194,7 @@
 
         //If Healer is attacked, change text with updated HP. If HP is 0 or less, remove picture and change alive to false
         if (heroAttacked.name.includes("Healer")) {
-          const healerText = document.getElementById("healer-health-txt");
-          healerText.innerHTML = `${heroAttacked.currentHP} / 400 HP `;
+          healerText.innerHTML = `${heroAttacked.currentHP} / ${heroAttacked.maxHP} `;
           if (heroAttacked.currentHP <= 0) {
             heroAttacked.alive = false;
             healerPicture.remove();
@@ -188,8 +202,7 @@
 
           //If Archer is attacked, change text with updated HP. If HP is 0 or less, remove picture and change alive to false
         } else if (heroAttacked.name.includes("archer")) {
-          const archerText = document.getElementById("archer-health-txt");
-          archerText.innerHTML = `${heroAttacked.currentHP} / 600 HP `;
+          archerText.innerHTML = `${heroAttacked.currentHP} / ${heroAttacked.maxHP} `;
           if (heroAttacked.currentHP <= 0) {
             heroAttacked.alive = false;
             archerPicture.remove();
@@ -197,18 +210,24 @@
 
           //If Warrior is attacked, change text with updated HP. If HP is 0 or less, remove picture and change alive to false
         } else if (heroAttacked.name.includes("Warrior")) {
-          const warriorText = document.getElementById("warrior-health-txt");
-          warriorText.innerHTML = `${heroAttacked.currentHP} / 800 HP `;
+          warriorText.innerHTML = `${heroAttacked.currentHP} / ${heroAttacked.maxHP} `;
           if (heroAttacked.currentHP <= 0) {
             heroAttacked.alive = false;
             warriorPicture.remove();
           }
         }
-        //Alert that announces which hero is attacked by the Dragon
-        alert(`${dragonObject.name} har angrepet ${heroAttacked.name} `);
-      }
 
-      //TO DO: Fix alert when dragon has won. Remove dragon and send alert when heroes has won.
+        //Filter out alive heroes, if it´s 0, alert about losing. If not - dragon attacks random hero message.
+        const aliveHeroesAfterAttack = aliveHeroes.filter(
+          (alivehero) => alivehero.alive == true
+        );
+        if (aliveHeroesAfterAttack.length == 0) {
+          alert(`Spillet er tapt! ${dragonObject.name} har vunnet🐉🫣`);
+        } else {
+          //Alert that announces which hero is attacked by the Dragon
+          alert(`${dragonObject.name} har angrepet ${heroAttacked.name} `);
+        }
+      }
     </script>
   </body>
 </html>
