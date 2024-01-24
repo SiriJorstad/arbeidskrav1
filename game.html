@@ -108,9 +108,9 @@
       };
 
       //Selecting the pictures of the heroes, adding a function when onclick
-      const healerPicture = document.querySelector(".healer .hero");
-      const archerPicture = document.querySelector(".archer .hero");
-      const warriorPicture = document.querySelector(".warrior .hero");
+      const healerPicture = document.getElementsByClassName("healer");
+      const archerPicture = document.getElementsByClassName("archer");
+      const warriorPicture = document.getElementsByClassName("warrior");
       const dragonPicture = document.getElementsByClassName("dragon");
       const healerNameTxt = document.getElementById("healer-name-txt");
       const archerNameTxt = document.getElementById("archer-name-txt");
@@ -134,9 +134,9 @@
       dragonText.innerHTML = `${dragonObject.currentHP} / ${dragonObject.maxHP} `;
 
       //Functions when you click on the heroes
-      healerPicture.addEventListener("click", healerClick);
-      archerPicture.addEventListener("click", archerClick);
-      warriorPicture.addEventListener("click", warriorClick);
+      healerPicture[0].addEventListener("click", healerClick);
+      archerPicture[0].addEventListener("click", archerClick);
+      warriorPicture[0].addEventListener("click", warriorClick);
 
       // When Healer is clicked, alert name of hero, damage and dragon name. Update dragons HP
       function healerClick() {
@@ -197,7 +197,7 @@
           healerText.innerHTML = `${heroAttacked.currentHP} / ${heroAttacked.maxHP} `;
           if (heroAttacked.currentHP <= 0) {
             heroAttacked.alive = false;
-            healerPicture.remove();
+            healerPicture[0].remove();
           }
 
           //If Archer is attacked, change text with updated HP. If HP is 0 or less, remove picture and change alive to false
@@ -205,7 +205,7 @@
           archerText.innerHTML = `${heroAttacked.currentHP} / ${heroAttacked.maxHP} `;
           if (heroAttacked.currentHP <= 0) {
             heroAttacked.alive = false;
-            archerPicture.remove();
+            archerPicture[0].remove();
           }
 
           //If Warrior is attacked, change text with updated HP. If HP is 0 or less, remove picture and change alive to false
@@ -213,7 +213,7 @@
           warriorText.innerHTML = `${heroAttacked.currentHP} / ${heroAttacked.maxHP} `;
           if (heroAttacked.currentHP <= 0) {
             heroAttacked.alive = false;
-            warriorPicture.remove();
+            warriorPicture[0].remove();
           }
         }
 
